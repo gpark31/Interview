@@ -17,7 +17,7 @@ class Node{
         n.next = end;
     }
 
-    Node deleteNode(Node head, int d){
+    static Node deleteNode(Node head, int d){
         if (head == null) return null;
         Node n = head;
         if (n.data == d){
@@ -32,6 +32,39 @@ class Node{
         }
         return head;
     }
-        
 
+    static void printLL(Node head){
+        while(head != null){
+            System.out.print(head.data + ", ");
+            head = head.next;
+        }
+    }
+
+    //2.1 page 94 Linked Lists question
+    static Node remoteDuplicate(Node head){
+        if(head == null) return null;
+        Node currentFast = head;
+        Node currentSlow = head;
+        while(currentSlow.next != null){
+            if(currentFast.next == null){
+                currentSlow = currentSlow.next;
+                currentFast = currentSlow.next;
+            }
+            else currentFast = currentFast.next;
+            if(currentFast.data == currentSlow.data){ //if duplicate value
+                //remote item
+                deleteNode(head, currentFast.data);
+            }
+        }
+        return head;
+    }
+        
+    public static void main(String[] args){
+        Node example = new Node(2);
+        example.appendtoTail(1);
+        example.appendtoTail(4);
+        example.appendtoTail(1);
+        printLL(example);
+
+    }
 }
